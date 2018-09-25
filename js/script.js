@@ -1,5 +1,15 @@
 window.onload = () => {
 
+  const contactName = document.querySelector('#name');
+  const contactEmail = document.querySelector('#email');
+  const addContactBtn = document.querySelector('#addContact');
+  const showContactsBtn = document.querySelector('#showContacts');
+  const sortContactsBtn = document.querySelector('#sortContacts');
+  const saveContactsBtn = document.querySelector('#saveContacts');
+  const loadContactsBtn = document.querySelector('#loadContacts');
+  const clearContactsBtn = document.querySelector('#clearContacts');
+  const contactsList = document.querySelector('#contactsList');
+
   class Contact {
     constructor(name, email) {
       this.name = name;
@@ -71,6 +81,7 @@ window.onload = () => {
   const c3 = new Contact('Murphy Stubbs', 'mstubby@gmail.com');
   const c4 = new Contact('Greg Trejo', 'jugalator@outlook.com');
   const c5 = new Contact('Anees Avila', 'howler@hotmail.com');
+
 
 
   //cm.add(c1);
