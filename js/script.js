@@ -1,14 +1,15 @@
 window.onload = () => {
 
-  const contactName = document.querySelector('#name');
-  const contactEmail = document.querySelector('#email');
-  const addContactBtn = document.querySelector('#addContact');
-  const showContactsBtn = document.querySelector('#showContacts');
-  const sortContactsBtn = document.querySelector('#sortContacts');
-  const saveContactsBtn = document.querySelector('#saveContacts');
-  const loadContactsBtn = document.querySelector('#loadContacts');
-  const clearContactsBtn = document.querySelector('#clearContacts');
-  const contactsList = document.querySelector('#contactsList');
+  const contactName = document.querySelector('#name'),
+    contactEmail = document.querySelector('#email'),
+    addContactBtn = document.querySelector('#addContact'),
+    showContactsBtn = document.querySelector('#showContacts'),
+    sortContactsBtn = document.querySelector('#sortContacts'),
+    saveContactsBtn = document.querySelector('#saveContacts'),
+    loadContactsBtn = document.querySelector('#loadContacts'),
+    deleteContactBtn = document.querySelector('#deleteContact'),
+    clearContactsBtn = document.querySelector('#clearContacts'),
+    contactsTableBox = document.querySelector('#contactsList');
 
   class Contact {
     constructor(name, email) {
@@ -23,8 +24,13 @@ window.onload = () => {
     }
 
     add(contact) {
+      if (contact.name === '' || contact.email === '') {
+        alert('Please enter name and e-mail!');
+        return;
+      }
       this.contactsList.push(contact);
-      alert('Contact added!');
+      contactName.value = '';
+      contactEmail.value = '';
     }
 
     remove(contact) {
@@ -39,11 +45,26 @@ window.onload = () => {
     sort() {
       this.contactsList.sort(ContactManager.compareByName);
       alert('Contacts sorted!');
+
     }
 
-    printContacts() {
-      this.contactsList.forEach(contact => {
-        console.log(`${contact.name} ${contact.email}`);
+    show() {
+      contactsTableBox.innerHTML = '';
+      if (cm.contactsList.length === 0) {
+        contactsTableBox.textContent = 'No contacts to display.';
+        return;
+      }
+      let contactsTable = document.createElement('table');
+      contactsTableBox.appendChild(contactsTable);
+      cm.contactsList.forEach(currentContact => {
+        let tableRow = document.createElement('tr');
+        let nameCell = document.createElement('td');
+        nameCell.textContent = currentContact.name;
+        tableRow.appendChild(nameCell);
+        let emailCell = document.createElement('td');
+        emailCell.textContent = currentContact.email;
+        tableRow.appendChild(emailCell);
+        contactsTable.appendChild(tableRow);
       });
     }
 
@@ -59,8 +80,14 @@ window.onload = () => {
       }
     }
 
-    empty() {
+    delete() {
+      //TODO
+      //let contactToDelete = prompt('Enter name or email to delete entry.');
+    }
+
+    clear() {
       this.contactsList = [];
+      contactsTableBox.textContent = 'No contacts to display.';
       alert('Contacts cleared!');
     }
 
@@ -73,30 +100,49 @@ window.onload = () => {
       }
       return 0;
     }
+
+    addTestContacts() {
+      cm.add(new Contact('Ronald J. Doak', 'RonaldJDoak@rhyta.com'));
+      cm.add(new Contact('Stephanie Sanchez', 'malvar@sbcglobal.net'));
+      cm.add(new Contact('Fox Mulder', 'iwnttbelive@fbbi.com'));
+      cm.add(new Contact('Yvonne Du Bois', 'yvdbois@yahoo.com'));
+      cm.add(new Contact('Takeshi Kovacs', 'tkovacs@envoy.prt'));
+      cm.add(new Contact('Angele Stuber', 'fallendj@live.com'));
+    }
   }
 
   const cm = new ContactManager;
-  const c1 = new Contact('Aria Macleod', 'bmidd@aol.com');
-  const c2 = new Contact('Rosanna Muir', 'rossannam@icloud.com');
-  const c3 = new Contact('Murphy Stubbs', 'mstubby@gmail.com');
-  const c4 = new Contact('Greg Trejo', 'jugalator@outlook.com');
-  const c5 = new Contact('Anees Avila', 'howler@hotmail.com');
+  cm.addTestContacts();
 
+  addContactBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    cm.add(new Contact(contactName.value, contactEmail.value));
+    alert('Contact added!');
+  });
 
+  showContactsBtn.addEventListener('click', () => {
+    cm.show();
+  });
 
-  //cm.add(c1);
-  //cm.add(c2);
-  //cm.add(c3);
-  //cm.add(c4);
-  //cm.add(c5);
+  sortContactsBtn.addEventListener('click', () => {
+    cm.sort();
+    cm.show();
+  });
 
-  //cm.printContacts();
-  //cm.sort();
-  //cm.printContacts();
-  // cm.save();
-  // cm.empty();
-  // cm.printContacts();
-  //cm.load();
-  //cm.printContacts();
+  saveContactsBtn.addEventListener('click', () => {
+    cm.save();
+  });
+
+  loadContactsBtn.addEventListener('click', () => {
+    cm.load();
+  });
+
+  deleteContactBtn.addEventListener('click', () => {
+    cm.delete();
+  });
+
+  clearContactsBtn.addEventListener('click', () => {
+    cm.clear();
+  });
 
 };

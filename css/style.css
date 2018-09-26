@@ -1,6 +1,5 @@
-button {
+* {
   font-family: 'DejaVu Sans Mono', 'Courier New', Courier, monospace;
-  font-weight: 700;
 }
 
 .button-box {
@@ -44,4 +43,8 @@ table,
 tr,
 td {
   border: 1px solid;
+}
+
+td {
+  padding: 5px 50px;
 }
