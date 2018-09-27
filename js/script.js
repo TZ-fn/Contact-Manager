@@ -81,8 +81,14 @@ window.onload = () => {
     }
 
     delete() {
-      //TODO
-      //let contactToDelete = prompt('Enter name or email to delete entry.');
+      let contactToDelete = prompt('Enter name or email to delete entry.');
+      this.contactsList.forEach(contact => {
+        if (contact.name === contactToDelete || contact.email === contactToDelete) {
+          this.contactsList.splice(this.contactsList.indexOf(contact), 1);
+          alert('Contact deleted!');
+        }
+      });
+      alert('No entry found with given name or email.');
     }
 
     clear() {
@@ -91,23 +97,27 @@ window.onload = () => {
       alert('Contacts cleared!');
     }
 
-    static compareByName(c1, c2) {
-      if (c1.name < c2.name) {
+    static compareByName(contact1, contact2) {
+      if (contact1.name < contact2.name) {
         return -1;
       }
-      if (c1.name > c2.name) {
+      if (contact1.name > contact2.name) {
         return 1;
       }
       return 0;
     }
 
     addTestContacts() {
+      cm.add(new Contact("Paul Muad'Dib", 'mdibpaul@atreides.net '));
       cm.add(new Contact('Ronald J. Doak', 'RonaldJDoak@rhyta.com'));
-      cm.add(new Contact('Stephanie Sanchez', 'malvar@sbcglobal.net'));
       cm.add(new Contact('Fox Mulder', 'iwnttbelive@fbbi.com'));
       cm.add(new Contact('Yvonne Du Bois', 'yvdbois@yahoo.com'));
       cm.add(new Contact('Takeshi Kovacs', 'tkovacs@envoy.prt'));
       cm.add(new Contact('Angele Stuber', 'fallendj@live.com'));
+      cm.add(new Contact('Harry Pooter', 'hapoot@gmail.com'));
+      cm.add(new Contact('Devin Irwin', 'wildfire@icloud.com'));
+      cm.add(new Contact('Pilot Pirx', 'fiasco@onet.pl'));
+      cm.add(new Contact('Sofia Perez', 'soperez@outlook.com'));
     }
   }
 
