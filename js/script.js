@@ -33,15 +33,6 @@ window.onload = () => {
       contactEmail.value = '';
     }
 
-    remove(contact) {
-      this.contactsList.forEach((currentContact, index) => {
-        if (contact === currentContact.name) {
-          this.contactsList.splice(index, 1);
-          alert('Contact removed!');
-        }
-      });
-    }
-
     sort() {
       this.contactsList.sort(ContactManager.compareByName);
       alert('Contacts sorted!');
@@ -81,14 +72,18 @@ window.onload = () => {
     }
 
     delete() {
-      let contactToDelete = prompt('Enter name or email to delete entry.');
+      let contactToDelete = prompt('Enter name or email to delete entry.'),
+        matchingContact = false;
       this.contactsList.forEach(contact => {
-        if (contact.name === contactToDelete || contact.email === contactToDelete) {
+        if (contact.name.toLowerCase() === contactToDelete.toLowerCase() || contact.email.toLowerCase() === contactToDelete.toLowerCase()) {
           this.contactsList.splice(this.contactsList.indexOf(contact), 1);
           alert('Contact deleted!');
+          matchingContact = true;
         }
       });
-      alert('No entry found with given name or email.');
+      if (!matchingContact) {
+        alert('No entry found with given name or email.');
+      }
     }
 
     clear() {
@@ -149,10 +144,12 @@ window.onload = () => {
 
   deleteContactBtn.addEventListener('click', () => {
     cm.delete();
+    cm.show();
   });
 
   clearContactsBtn.addEventListener('click', () => {
     cm.clear();
+    cm.show();
   });
 
 };
