@@ -3,6 +3,7 @@ window.onload = () => {
   const contactName = document.querySelector('#name'),
     contactEmail = document.querySelector('#email'),
     addContactBtn = document.querySelector('#addContact'),
+    addTestContactsBtn = document.querySelector('#addTestContacts'),
     showContactsBtn = document.querySelector('#showContacts'),
     sortContactsBtn = document.querySelector('#sortContacts'),
     saveContactsBtn = document.querySelector('#saveContacts'),
@@ -29,6 +30,7 @@ window.onload = () => {
         return;
       }
       this.contactsList.push(contact);
+      alert('Contact added!');
       contactName.value = '';
       contactEmail.value = '';
     }
@@ -47,7 +49,7 @@ window.onload = () => {
       }
       let contactsTable = document.createElement('table');
       contactsTableBox.appendChild(contactsTable);
-      cm.contactsList.forEach(currentContact => {
+      cm.contactsList.forEach((currentContact, i) => {
         let tableRow = document.createElement('tr');
         let nameCell = document.createElement('td');
         nameCell.textContent = currentContact.name;
@@ -55,6 +57,18 @@ window.onload = () => {
         let emailCell = document.createElement('td');
         emailCell.textContent = currentContact.email;
         tableRow.appendChild(emailCell);
+        let deleteCell = document.createElement('td');
+        let deleteButton = document.createElement('button');
+        let binImage = document.createElement('img');
+        binImage.src = 'assets/img/bin.png';
+        binImage.dataset.contactID = i;
+        deleteButton.appendChild(binImage);
+        deleteButton.addEventListener('click', (e) => {
+          cm.deleteContact(e);
+          cm.show();
+        });
+        deleteCell.appendChild(deleteButton);
+        tableRow.appendChild(deleteCell);
         contactsTable.appendChild(tableRow);
       });
     }
@@ -65,7 +79,7 @@ window.onload = () => {
     }
 
     load() {
-      if (localStorage.contacts !== undefined) {
+      if (localStorage.contacts) {
         this.contactsList = JSON.parse(localStorage.contacts);
         alert('Contacts loaded!');
       }
@@ -84,6 +98,10 @@ window.onload = () => {
       if (!matchingContact) {
         alert('No entry found with given name or email.');
       }
+    }
+
+    deleteContact(e) {
+      this.contactsList.splice(e.target.dataset.contactID, 1);
     }
 
     clear() {
@@ -117,12 +135,17 @@ window.onload = () => {
   }
 
   const cm = new ContactManager;
-  cm.addTestContacts();
 
   addContactBtn.addEventListener('click', (e) => {
     e.preventDefault();
     cm.add(new Contact(contactName.value, contactEmail.value));
-    alert('Contact added!');
+    cm.show();
+  });
+
+  addTestContactsBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    cm.addTestContacts();
+    cm.show();
   });
 
   showContactsBtn.addEventListener('click', () => {
@@ -140,6 +163,7 @@ window.onload = () => {
 
   loadContactsBtn.addEventListener('click', () => {
     cm.load();
+    cm.show();
   });
 
   deleteContactBtn.addEventListener('click', () => {
