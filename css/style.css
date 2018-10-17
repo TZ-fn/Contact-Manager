@@ -8,9 +8,7 @@ body {
 }
 
 .button-box {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2em;
+  margin: 2em auto;
   width: 100%;
   height: 5%;
   display: flex;
@@ -50,6 +48,33 @@ label {
   padding-top: 2em;
   display: flex;
   justify-content: center;
+}
+
+.status-window {
+  font-size: 2em;
+  border-radius: 3px;
+  margin: auto;
+  height: 2.5em;
+  max-width: 80%;
+  /* visibility: hidden; */
+}
+
+.status-window.success {
+  /* visibility: visible; */
+  border: 3px solid rgb(86, 128, 86);
+  background-color: rgba(185, 247, 177, 0.5)
+}
+
+.status-window.info {
+  visibility: visible;
+  border: 3px solid rgb(94, 136, 252);
+  background-color: hsla(204, 92%, 85%, 0.5)
+}
+
+.status-window.error {
+  visibility: visible;
+  border: 3px solid rgb(226, 226, 17);
+  background-color: rgba(247, 248, 176, 0.5)
 }
 
 table {

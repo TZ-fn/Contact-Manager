@@ -10,7 +10,8 @@ window.onload = () => {
     loadContactsBtn = document.querySelector('#loadContacts'),
     deleteContactBtn = document.querySelector('#deleteContact'),
     clearContactsBtn = document.querySelector('#clearContacts'),
-    contactsTableBox = document.querySelector('#contactsList');
+    contactsTableBox = document.querySelector('#contactsList'),
+    statusWindow = document.querySelector('#status-window');
 
   class Contact {
     constructor(name, email) {
@@ -108,6 +109,7 @@ window.onload = () => {
       this.contactsList = [];
       contactsTableBox.textContent = 'No contacts to display.';
       alert('Contacts cleared!');
+      // this.displayStatusInfo('success', 'Contacts cleared!');
     }
 
     static compareByName(contact1, contact2) {
@@ -119,6 +121,17 @@ window.onload = () => {
       }
       return 0;
     }
+
+    // displayStatusInfo(statusType, message) {
+    //   if (statusType === 'success') {
+    //     statusWindow.classList += 'success';
+    //   } else if (statusType === 'info') {
+    //     statusWindow.classList += 'info';
+    //   } else {
+    //     statusWindow.classList += 'error';
+    //   }
+    //   statusWindow.textContent = message;
+    // }
 
     addTestContacts() {
       cm.add(new Contact("Paul Muad'Dib", 'mdibpaul@atreides.net '));
