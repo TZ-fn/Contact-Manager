@@ -11,7 +11,7 @@ window.onload = () => {
     deleteContactBtn = document.querySelector('#deleteContact'),
     clearContactsBtn = document.querySelector('#clearContacts'),
     contactsTableBox = document.querySelector('#contactsList'),
-    statusWindow = document.querySelector('#status-window');
+    statusWindow = document.querySelector('.status-window');
 
   class Contact {
     constructor(name, email) {
@@ -27,25 +27,24 @@ window.onload = () => {
 
     add(contact) {
       if (contact.name === '' || contact.email === '') {
-        alert('Please enter name and e-mail!');
+        this.displayStatusInfo('error', 'Please enter name and e-mail!');
         return;
       }
       this.contactsList.push(contact);
-      alert('Contact added!');
+      this.displayStatusInfo('success', 'Contact added!');
       contactName.value = '';
       contactEmail.value = '';
     }
 
     sort() {
       this.contactsList.sort(ContactManager.compareByName);
-      alert('Contacts sorted!');
-
+      this.displayStatusInfo('success', 'Contacts sorted!');
     }
 
     show() {
       contactsTableBox.innerHTML = '';
       if (cm.contactsList.length === 0) {
-        contactsTableBox.textContent = 'No contacts to display.';
+        this.displayStatusInfo('error', 'No contacts to display.');
         return;
       }
       let contactsTable = document.createElement('table');
@@ -76,13 +75,13 @@ window.onload = () => {
 
     save() {
       localStorage.contacts = JSON.stringify(this.contactsList);
-      alert('Contacts saved!');
+      this.displayStatusInfo('success', 'Contacts saved!');
     }
 
     load() {
       if (localStorage.contacts) {
         this.contactsList = JSON.parse(localStorage.contacts);
-        alert('Contacts loaded!');
+        this.displayStatusInfo('success', 'Contacts loaded!');
       }
     }
 
@@ -92,24 +91,23 @@ window.onload = () => {
       this.contactsList.forEach(contact => {
         if (contact.name.toLowerCase() === contactToDelete.toLowerCase() || contact.email.toLowerCase() === contactToDelete.toLowerCase()) {
           this.contactsList.splice(this.contactsList.indexOf(contact), 1);
-          alert('Contact deleted!');
           matchingContact = true;
+          this.displayStatusInfo('success', 'Contact deleted.');
         }
       });
       if (!matchingContact) {
-        alert('No entry found with given name or email.');
+        this.displayStatusInfo('error', 'No entry found with given name or email.');
       }
     }
 
     deleteContact(e) {
       this.contactsList.splice(e.target.dataset.contactID, 1);
+      this.displayStatusInfo('info', 'Contact deleted');
     }
 
     clear() {
       this.contactsList = [];
-      contactsTableBox.textContent = 'No contacts to display.';
-      alert('Contacts cleared!');
-      // this.displayStatusInfo('success', 'Contacts cleared!');
+      this.displayStatusInfo('info', 'Contacts cleared!');
     }
 
     static compareByName(contact1, contact2) {
@@ -122,16 +120,17 @@ window.onload = () => {
       return 0;
     }
 
-    // displayStatusInfo(statusType, message) {
-    //   if (statusType === 'success') {
-    //     statusWindow.classList += 'success';
-    //   } else if (statusType === 'info') {
-    //     statusWindow.classList += 'info';
-    //   } else {
-    //     statusWindow.classList += 'error';
-    //   }
-    //   statusWindow.textContent = message;
-    // }
+    displayStatusInfo(statusType, message) {
+      statusWindow.className = 'status-window';
+      if (statusType === 'success') {
+        statusWindow.className += ' success';
+      } else if (statusType === 'info') {
+        statusWindow.className += ' info';
+      } else {
+        statusWindow.className += ' error';
+      }
+      statusWindow.textContent = message;
+    }
 
     addTestContacts() {
       cm.add(new Contact("Paul Muad'Dib", 'mdibpaul@atreides.net '));

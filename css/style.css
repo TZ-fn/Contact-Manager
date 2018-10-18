@@ -51,16 +51,19 @@ label {
 }
 
 .status-window {
-  font-size: 2em;
+  padding-top: 0.5em;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1em;
   border-radius: 3px;
   margin: auto;
   height: 2.5em;
   max-width: 80%;
-  /* visibility: hidden; */
+  visibility: none;
 }
 
 .status-window.success {
-  /* visibility: visible; */
+  visibility: visible;
   border: 3px solid rgb(86, 128, 86);
   background-color: rgba(185, 247, 177, 0.5)
 }
@@ -73,7 +76,7 @@ label {
 
 .status-window.error {
   visibility: visible;
-  border: 3px solid rgb(226, 226, 17);
+  border: 3px solid rgb(255, 196, 0);
   background-color: rgba(247, 248, 176, 0.5)
 }
 
