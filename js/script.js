@@ -121,6 +121,7 @@ window.onload = () => {
     }
 
     displayStatusInfo(statusType, message) {
+      statusWindow.style.display = 'block';
       statusWindow.className = 'status-window';
       if (statusType === 'success') {
         statusWindow.className += ' success';
@@ -130,6 +131,9 @@ window.onload = () => {
         statusWindow.className += ' error';
       }
       statusWindow.textContent = message;
+      setTimeout((() => {
+        statusWindow.style.display = 'none';
+      }), 2000);
     }
 
     addTestContacts() {
