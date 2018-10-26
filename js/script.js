@@ -4,6 +4,7 @@ window.onload = () => {
     contactEmail = document.querySelector('#email'),
     addContactBtn = document.querySelector('#addContact'),
     addTestContactsBtn = document.querySelector('#addTestContacts'),
+    searchBox = document.querySelector('#search'),
     showContactsBtn = document.querySelector('#showContacts'),
     sortContactsBtn = document.querySelector('#sortContacts'),
     saveContactsBtn = document.querySelector('#saveContacts'),
@@ -41,6 +42,14 @@ window.onload = () => {
       this.displayStatusInfo('success', 'Contacts sorted!');
     }
 
+    search() {
+      this.contactsList.forEach((contact) => {
+        if (searchBox.value.toLowerCase() === contact.name.toLowerCase() || searchBox.value.toLowerCase() === contact.email.toLowerCase()) {
+          console.log('success 😊');
+        }
+      });
+    }
+
     show() {
       contactsTableBox.innerHTML = '';
       if (cm.contactsList.length === 0) {
@@ -71,6 +80,7 @@ window.onload = () => {
         tableRow.appendChild(deleteCell);
         contactsTable.appendChild(tableRow);
       });
+      console.log('Contacts: ', this.contactsList);
     }
 
     save() {
@@ -133,11 +143,11 @@ window.onload = () => {
       statusWindow.textContent = message;
       setTimeout((() => {
         statusWindow.style.display = 'none';
-      }), 3000);
+      }), 3500);
     }
 
     addTestContacts() {
-      cm.add(new Contact("Paul Muad'Dib", 'mdibpaul@atreides.net '));
+      cm.add(new Contact("Paul Muad'Dib", 'mdibpaul@atreides.net'));
       cm.add(new Contact('Ronald J. Doak', 'RonaldJDoak@rhyta.com'));
       cm.add(new Contact('Fox Mulder', 'iwnttbelive@fbbi.com'));
       cm.add(new Contact('Yvonne Du Bois', 'yvdbois@yahoo.com'));
@@ -162,6 +172,10 @@ window.onload = () => {
     e.preventDefault();
     cm.addTestContacts();
     cm.show();
+  });
+
+  searchBox.addEventListener('change', () => {
+    cm.search();
   });
 
   showContactsBtn.addEventListener('click', () => {
