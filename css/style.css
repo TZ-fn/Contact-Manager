@@ -34,9 +34,10 @@ label {
 .container {
   background-color: rgba(255, 255, 255, 0.6);
   padding-top: 2em;
+  padding-bottom: 2em;
   border-radius: 3px;
   max-width: 50%;
-  height: 96vh;
+  min-height: 96vh;
   margin-left: auto;
   margin-right: auto;
   margin-top: 0.5em;
@@ -60,7 +61,6 @@ label {
   height: 2.5em;
   max-width: 80%;
   display: none;
-  transition: display 3s;
   background-repeat: no-repeat;
   background-position: 50px center;
 }
@@ -70,6 +70,7 @@ label {
   border: 3px solid rgb(86, 128, 86);
   background-color: rgba(185, 247, 177, 0.5);
   background-image: url('../assets/img/success.png');
+  animation: fadeOut 4s;
 }
 
 .status-window.info {
@@ -77,6 +78,7 @@ label {
   border: 3px solid rgb(94, 136, 252);
   background-color: hsla(204, 92%, 85%, 0.5);
   background-image: url('../assets/img/info.png');
+  animation: fadeOut 4s;
 }
 
 .status-window.error {
@@ -84,6 +86,7 @@ label {
   border: 3px solid rgb(255, 196, 0);
   background-color: rgba(247, 248, 176, 0.5);
   background-image: url('../assets/img/attention.png');
+  animation: fadeOut 4s;
 }
 
 table {
@@ -98,4 +101,14 @@ td {
 
 td {
   padding: 5px 50px;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }

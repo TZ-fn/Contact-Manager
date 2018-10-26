@@ -133,7 +133,7 @@ window.onload = () => {
       statusWindow.textContent = message;
       setTimeout((() => {
         statusWindow.style.display = 'none';
-      }), 2000);
+      }), 3000);
     }
 
     addTestContacts() {
