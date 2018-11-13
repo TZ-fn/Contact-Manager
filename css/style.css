@@ -5,6 +5,8 @@
 
 body {
   background-color: aliceblue;
+  margin: 0;
+  padding: 0;
 }
 
 .button-box {
@@ -26,11 +28,10 @@ body {
 }
 
 .container {
+  padding: 2em;
   background-color: rgba(255, 255, 255, 0.6);
-  padding-top: 2em;
-  padding-bottom: 2em;
   border-radius: 3px;
-  max-width: 50%;
+  max-width: 60%;
   min-height: 96vh;
   margin-left: auto;
   margin-right: auto;
@@ -52,7 +53,7 @@ body {
 
 #searchBar input {
   line-height: 1.5em;
-  width: 80%;
+  width: 200px;
 }
 
 #contactsList {
@@ -124,5 +125,68 @@ td {
 
   100% {
     opacity: 0;
+  }
+}
+
+@media (max-width: 1750px) {
+  .container {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 1450px) {
+  .container {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 90%;
+  }
+
+  .contact-input label {
+    margin-right: 5px;
+  }
+
+  td {
+    padding: 5px 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    max-width: 95%;
+  }
+
+  .contact-input input {
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .contact-input button {
+    height: 3.75em;
+    font-size: .66em;
+  }
+
+  .button-box button {
+    height: 3.75em;
+    font-size: .66em;
+    padding: .1em;
+  }
+
+  td {
+    padding: 2px 4px;
+  }
+}
+
+@media (max-width: 400px) {
+  td {
+    font-size: .9em;
+    padding: 2px 3px;
   }
 }
