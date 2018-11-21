@@ -154,7 +154,7 @@ td {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .container {
     max-width: 95%;
   }
@@ -181,6 +181,16 @@ td {
 
   td {
     padding: 2px 4px;
+  }
+
+  .status-window {
+    background-position: 5px center;
+  }
+}
+
+@media (max-width: 500px) {
+  .status-window.error {
+    background-image: none;
   }
 }
 

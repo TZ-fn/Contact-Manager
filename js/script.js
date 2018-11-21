@@ -80,7 +80,6 @@ window.onload = () => {
         tableRow.appendChild(deleteCell);
         contactsTable.appendChild(tableRow);
       });
-      console.log('Contacts: ', this.contactsList);
     }
 
     save() {
