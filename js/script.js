@@ -43,9 +43,36 @@ window.onload = () => {
     }
 
     search() {
-      this.contactsList.forEach((contact) => {
-        if (searchBox.value.toLowerCase() === contact.name.toLowerCase() || searchBox.value.toLowerCase() === contact.email.toLowerCase()) {
-          console.log('success 😊');
+      contactsTableBox.innerHTML = '';
+      this.contactsList.forEach(contact => {
+        if ((contact.name.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1) || (contact.email.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1)) {
+          let searchResults = [];
+          let contactsTable = document.createElement('table');
+          contactsTableBox.appendChild(contactsTable);
+          searchResults.push(contact);
+          searchResults.forEach(contact => {
+            console.log(contact.name);
+            let tableRow = document.createElement('tr');
+            let nameCell = document.createElement('td');
+            nameCell.textContent = contact.name;
+            tableRow.appendChild(nameCell);
+            let emailCell = document.createElement('td');
+            emailCell.textContent = contact.email;
+            tableRow.appendChild(emailCell);
+            let deleteCell = document.createElement('td');
+            let deleteButton = document.createElement('button');
+            let binImage = document.createElement('img');
+            binImage.src = 'assets/img/bin.png';
+            binImage.dataset.contactID = this.contactsList.indexOf(contact);
+            deleteButton.appendChild(binImage);
+            deleteButton.addEventListener('click', (e) => {
+              cm.deleteContact(e);
+              cm.show();
+            });
+            deleteCell.appendChild(deleteButton);
+            tableRow.appendChild(deleteCell);
+            contactsTable.appendChild(tableRow);
+          });
         }
       });
     }
@@ -173,7 +200,7 @@ window.onload = () => {
     cm.show();
   });
 
-  searchBox.addEventListener('change', () => {
+  searchBox.addEventListener('keyup', () => {
     cm.search();
   });
 
