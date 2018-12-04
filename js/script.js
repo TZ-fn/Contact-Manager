@@ -44,14 +44,21 @@ window.onload = () => {
 
     search() {
       contactsTableBox.innerHTML = '';
+      let contactsTable = document.createElement('table');
+      let headerRow = document.createElement('tr');
+      let headerName = document.createElement('th');
+      let headerEmail = document.createElement('th');
+      headerName.textContent = 'Name';
+      headerEmail.textContent = 'Email';
+      headerRow.appendChild(headerName);
+      headerRow.appendChild(headerEmail);
+      contactsTable.appendChild(headerRow);
       this.contactsList.forEach(contact => {
         if ((contact.name.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1) || (contact.email.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1)) {
           let searchResults = [];
-          let contactsTable = document.createElement('table');
           contactsTableBox.appendChild(contactsTable);
           searchResults.push(contact);
           searchResults.forEach(contact => {
-            console.log(contact.name);
             let tableRow = document.createElement('tr');
             let nameCell = document.createElement('td');
             nameCell.textContent = contact.name;
@@ -84,6 +91,14 @@ window.onload = () => {
         return;
       }
       let contactsTable = document.createElement('table');
+      let headerRow = document.createElement('tr');
+      let headerName = document.createElement('th');
+      let headerEmail = document.createElement('th');
+      headerName.textContent = 'Name';
+      headerEmail.textContent = 'Email';
+      headerRow.appendChild(headerName);
+      headerRow.appendChild(headerEmail);
+      contactsTable.appendChild(headerRow);
       contactsTableBox.appendChild(contactsTable);
       cm.contactsList.forEach((currentContact, i) => {
         let tableRow = document.createElement('tr');
