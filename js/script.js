@@ -29,12 +29,12 @@ window.onload = () => {
     add(contact) {
       if (contact.name === '' || contact.email === '') {
         this.displayStatusInfo('error', 'Please enter name and e-mail!');
-        return;
+      } else {
+        this.contactsList.push(contact);
+        this.displayStatusInfo('success', 'Contact added!');
+        contactName.value = '';
+        contactEmail.value = '';
       }
-      this.contactsList.push(contact);
-      this.displayStatusInfo('success', 'Contact added!');
-      contactName.value = '';
-      contactEmail.value = '';
     }
 
     sort() {
@@ -43,85 +43,90 @@ window.onload = () => {
     }
 
     search() {
-      contactsTableBox.innerHTML = '';
-      let contactsTable = document.createElement('table');
-      let headerRow = document.createElement('tr');
-      let headerName = document.createElement('th');
-      let headerEmail = document.createElement('th');
-      headerName.textContent = 'Name';
-      headerEmail.textContent = 'Email';
-      headerRow.appendChild(headerName);
-      headerRow.appendChild(headerEmail);
-      contactsTable.appendChild(headerRow);
-      this.contactsList.forEach(contact => {
-        if ((contact.name.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1) || (contact.email.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1)) {
-          let searchResults = [];
-          contactsTableBox.appendChild(contactsTable);
-          searchResults.push(contact);
-          searchResults.forEach(contact => {
-            let tableRow = document.createElement('tr');
-            let nameCell = document.createElement('td');
-            nameCell.textContent = contact.name;
-            tableRow.appendChild(nameCell);
-            let emailCell = document.createElement('td');
-            emailCell.textContent = contact.email;
-            tableRow.appendChild(emailCell);
-            let deleteCell = document.createElement('td');
-            let deleteButton = document.createElement('button');
-            let binImage = document.createElement('img');
-            binImage.src = 'assets/img/bin.png';
-            binImage.dataset.contactID = this.contactsList.indexOf(contact);
-            deleteButton.appendChild(binImage);
-            deleteButton.addEventListener('click', (e) => {
-              cm.deleteContact(e);
-              cm.show();
+      if (searchBox.value === '') {
+        cm.show();
+      } else {
+        contactsTableBox.innerHTML = '';
+        let contactsTable = document.createElement('table');
+        let headerRow = document.createElement('tr');
+        let headerName = document.createElement('th');
+        let headerEmail = document.createElement('th');
+        headerName.textContent = 'Name';
+        headerEmail.textContent = 'Email';
+        headerRow.appendChild(headerName);
+        headerRow.appendChild(headerEmail);
+        contactsTable.appendChild(headerRow);
+        this.contactsList.forEach(contact => {
+          if ((contact.name.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1) ||
+            (contact.email.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1)) {
+            let searchResults = [];
+            contactsTableBox.appendChild(contactsTable);
+            searchResults.push(contact);
+            searchResults.forEach(contact => {
+              let tableRow = document.createElement('tr');
+              let nameCell = document.createElement('td');
+              nameCell.textContent = contact.name;
+              tableRow.appendChild(nameCell);
+              let emailCell = document.createElement('td');
+              emailCell.textContent = contact.email;
+              tableRow.appendChild(emailCell);
+              let deleteCell = document.createElement('td');
+              let deleteButton = document.createElement('button');
+              let binImage = document.createElement('img');
+              binImage.src = 'assets/img/bin.png';
+              binImage.dataset.contactID = this.contactsList.indexOf(contact);
+              deleteButton.appendChild(binImage);
+              deleteButton.addEventListener('click', (e) => {
+                cm.deleteContact(e);
+                cm.show();
+              });
+              deleteCell.appendChild(deleteButton);
+              tableRow.appendChild(deleteCell);
+              contactsTable.appendChild(tableRow);
             });
-            deleteCell.appendChild(deleteButton);
-            tableRow.appendChild(deleteCell);
-            contactsTable.appendChild(tableRow);
-          });
-        }
-      });
+          }
+        });
+      }
     }
 
     show() {
       contactsTableBox.innerHTML = '';
       if (cm.contactsList.length === 0) {
         this.displayStatusInfo('error', 'No contacts to display.');
-        return;
-      }
-      let contactsTable = document.createElement('table');
-      let headerRow = document.createElement('tr');
-      let headerName = document.createElement('th');
-      let headerEmail = document.createElement('th');
-      headerName.textContent = 'Name';
-      headerEmail.textContent = 'Email';
-      headerRow.appendChild(headerName);
-      headerRow.appendChild(headerEmail);
-      contactsTable.appendChild(headerRow);
-      contactsTableBox.appendChild(contactsTable);
-      cm.contactsList.forEach((currentContact, i) => {
-        let tableRow = document.createElement('tr');
-        let nameCell = document.createElement('td');
-        nameCell.textContent = currentContact.name;
-        tableRow.appendChild(nameCell);
-        let emailCell = document.createElement('td');
-        emailCell.textContent = currentContact.email;
-        tableRow.appendChild(emailCell);
-        let deleteCell = document.createElement('td');
-        let deleteButton = document.createElement('button');
-        let binImage = document.createElement('img');
-        binImage.src = 'assets/img/bin.png';
-        binImage.dataset.contactID = i;
-        deleteButton.appendChild(binImage);
-        deleteButton.addEventListener('click', (e) => {
-          cm.deleteContact(e);
-          cm.show();
+      } else {
+        let contactsTable = document.createElement('table');
+        let headerRow = document.createElement('tr');
+        let headerName = document.createElement('th');
+        let headerEmail = document.createElement('th');
+        headerName.textContent = 'Name';
+        headerEmail.textContent = 'Email';
+        headerRow.appendChild(headerName);
+        headerRow.appendChild(headerEmail);
+        contactsTable.appendChild(headerRow);
+        contactsTableBox.appendChild(contactsTable);
+        cm.contactsList.forEach((currentContact, i) => {
+          let tableRow = document.createElement('tr');
+          let nameCell = document.createElement('td');
+          nameCell.textContent = currentContact.name;
+          tableRow.appendChild(nameCell);
+          let emailCell = document.createElement('td');
+          emailCell.textContent = currentContact.email;
+          tableRow.appendChild(emailCell);
+          let deleteCell = document.createElement('td');
+          let deleteButton = document.createElement('button');
+          let binImage = document.createElement('img');
+          binImage.src = 'assets/img/bin.png';
+          binImage.dataset.contactID = i;
+          deleteButton.appendChild(binImage);
+          deleteButton.addEventListener('click', (e) => {
+            cm.deleteContact(e);
+            cm.show();
+          });
+          deleteCell.appendChild(deleteButton);
+          tableRow.appendChild(deleteCell);
+          contactsTable.appendChild(tableRow);
         });
-        deleteCell.appendChild(deleteButton);
-        tableRow.appendChild(deleteCell);
-        contactsTable.appendChild(tableRow);
-      });
+      }
     }
 
     save() {
@@ -133,6 +138,8 @@ window.onload = () => {
       if (localStorage.contacts) {
         this.contactsList = JSON.parse(localStorage.contacts);
         this.displayStatusInfo('success', 'Contacts loaded!');
+      } else {
+        this.displayStatusInfo('error', 'No contacts to load!');
       }
     }
 
@@ -140,7 +147,8 @@ window.onload = () => {
       let contactToDelete = prompt('Enter name or email to delete entry.'),
         matchingContact = false;
       this.contactsList.forEach(contact => {
-        if (contact.name.toLowerCase() === contactToDelete.toLowerCase() || contact.email.toLowerCase() === contactToDelete.toLowerCase()) {
+        if (contact.name.toLowerCase() === contactToDelete.toLowerCase() ||
+          contact.email.toLowerCase() === contactToDelete.toLowerCase()) {
           this.contactsList.splice(this.contactsList.indexOf(contact), 1);
           matchingContact = true;
           this.displayStatusInfo('success', 'Contact deleted.');
