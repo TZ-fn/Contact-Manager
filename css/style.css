@@ -34,7 +34,7 @@ body {
   max-width: 60%;
   min-height: 96vh;
   margin: 0.5rem auto;
-  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.3);
 }
 
 #searchBar {

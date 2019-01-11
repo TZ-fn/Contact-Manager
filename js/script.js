@@ -182,6 +182,7 @@ window.onload = () => {
     displayStatusInfo(statusType, message) {
       statusWindow.style.display = 'block';
       statusWindow.className = 'status-window';
+      statusWindow.offsetHeight; /* trigger reflow */
       if (statusType === 'success') {
         statusWindow.className += ' success';
       } else if (statusType === 'info') {
@@ -190,9 +191,6 @@ window.onload = () => {
         statusWindow.className += ' error';
       }
       statusWindow.textContent = message;
-      setTimeout((() => {
-        statusWindow.style.display = 'none';
-      }), 3500);
     }
 
     addTestContacts() {
@@ -253,6 +251,10 @@ window.onload = () => {
   clearContactsBtn.addEventListener('click', () => {
     cm.clear();
     cm.show();
+  });
+
+  statusWindow.addEventListener('animationend', () => {
+    statusWindow.style.display = 'none';
   });
 
 };
