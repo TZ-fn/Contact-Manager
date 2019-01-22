@@ -57,8 +57,8 @@ window.onload = () => {
         headerRow.appendChild(headerEmail);
         contactsTable.appendChild(headerRow);
         this.contactsList.forEach(contact => {
-          if ((contact.name.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1) ||
-            (contact.email.toLowerCase().indexOf(searchBox.value.toLowerCase()) > -1)) {
+          if ((contact.name.toLowerCase().includes(searchBox.value.toLowerCase())) ||
+            (contact.email.toLowerCase().includes(searchBox.value.toLowerCase()))) {
             let searchResults = [];
             contactsTableBox.appendChild(contactsTable);
             searchResults.push(contact);
@@ -78,7 +78,6 @@ window.onload = () => {
               deleteButton.appendChild(binImage);
               deleteButton.addEventListener('click', (e) => {
                 cm.deleteContact(e);
-                cm.show();
               });
               deleteCell.appendChild(deleteButton);
               tableRow.appendChild(deleteCell);
@@ -120,7 +119,6 @@ window.onload = () => {
           deleteButton.appendChild(binImage);
           deleteButton.addEventListener('click', (e) => {
             cm.deleteContact(e);
-            cm.show();
           });
           deleteCell.appendChild(deleteButton);
           tableRow.appendChild(deleteCell);
@@ -151,7 +149,8 @@ window.onload = () => {
           contact.email.toLowerCase() === contactToDelete.toLowerCase()) {
           this.contactsList.splice(this.contactsList.indexOf(contact), 1);
           matchingContact = true;
-          this.displayStatusInfo('success', 'Contact deleted.');
+          this.displayStatusInfo('info', 'Contact deleted.');
+          cm.show();
         }
       });
       if (!matchingContact) {
@@ -162,6 +161,7 @@ window.onload = () => {
     deleteContact(e) {
       this.contactsList.splice(e.target.dataset.contactID, 1);
       this.displayStatusInfo('info', 'Contact deleted');
+      cm.search();
     }
 
     clear() {
@@ -221,7 +221,7 @@ window.onload = () => {
     cm.show();
   });
 
-  searchBox.addEventListener('keyup', () => {
+  searchBox.addEventListener('input', () => {
     cm.search();
   });
 
@@ -245,16 +245,11 @@ window.onload = () => {
 
   deleteContactBtn.addEventListener('click', () => {
     cm.delete();
-    cm.show();
   });
 
   clearContactsBtn.addEventListener('click', () => {
     cm.clear();
     cm.show();
-  });
-
-  statusWindow.addEventListener('animationend', () => {
-    statusWindow.style.display = 'none';
   });
 
 };
