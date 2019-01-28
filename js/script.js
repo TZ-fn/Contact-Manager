@@ -56,7 +56,7 @@ window.onload = () => {
         headerRow.appendChild(headerName);
         headerRow.appendChild(headerEmail);
         contactsTable.appendChild(headerRow);
-        this.contactsList.forEach(contact => {
+        this.contactsList.forEach((contact, i) => {
           if ((contact.name.toLowerCase().includes(searchBox.value.toLowerCase())) ||
             (contact.email.toLowerCase().includes(searchBox.value.toLowerCase()))) {
             let searchResults = [];
@@ -70,6 +70,24 @@ window.onload = () => {
               let emailCell = document.createElement('td');
               emailCell.textContent = contact.email;
               tableRow.appendChild(emailCell);
+              nameCell.addEventListener('click', function () {
+                this.setAttribute('contenteditable', '');
+              });
+              nameCell.addEventListener('blur', function () {
+                this.setAttribute('contenteditable', 'false');
+              });
+              nameCell.addEventListener('input', function () {
+                cm.contactsList[i].name = nameCell.textContent;
+              });
+              emailCell.addEventListener('click', function () {
+                this.setAttribute('contenteditable', '');
+              });
+              emailCell.addEventListener('blur', function () {
+                this.setAttribute('contenteditable', 'false');
+              });
+              emailCell.addEventListener('input', function () {
+                cm.contactsList[i].email = emailCell.textContent;
+              });
               let deleteCell = document.createElement('td');
               let deleteButton = document.createElement('button');
               let binImage = document.createElement('img');
@@ -111,6 +129,24 @@ window.onload = () => {
           let emailCell = document.createElement('td');
           emailCell.textContent = currentContact.email;
           tableRow.appendChild(emailCell);
+          nameCell.addEventListener('click', function () {
+            this.setAttribute('contenteditable', '');
+          });
+          nameCell.addEventListener('blur', function () {
+            this.setAttribute('contenteditable', 'false');
+          });
+          nameCell.addEventListener('input', function () {
+            cm.contactsList[i].name = nameCell.textContent;
+          });
+          emailCell.addEventListener('click', function () {
+            this.setAttribute('contenteditable', '');
+          });
+          emailCell.addEventListener('blur', function () {
+            this.setAttribute('contenteditable', 'false');
+          });
+          emailCell.addEventListener('input', function () {
+            cm.contactsList[i].email = emailCell.textContent;
+          });
           let deleteCell = document.createElement('td');
           let deleteButton = document.createElement('button');
           let binImage = document.createElement('img');
