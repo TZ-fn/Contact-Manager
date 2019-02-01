@@ -6,7 +6,7 @@
 }
 
 body {
-  background: linear-gradient(45deg, hsla(190, 65%, 58%, 0.4) 0%, hsla(67, 56%, 54%, 0.4) 100%);
+  background: linear-gradient(45deg, #4ec2d966 0%, #bccb4866 100%);
 }
 
 input {
@@ -16,7 +16,24 @@ input {
 
 .button-box button,
 .contact-input button {
+  border-radius: 3px;
+  color: #0f0f0f;
+  background: #ffffffb3;
+  transition: none;
+  border: 4px double #4ec2d94d;
   padding: 1em;
+}
+
+.button-box button:hover,
+.contact-input button:hover {
+  background: transparent;
+  color: #0f0f0f;
+}
+
+.button-box button:active,
+.contact-input button:active {
+  top: 2px;
+  transform: scale(1.02);
 }
 
 .button-box {
