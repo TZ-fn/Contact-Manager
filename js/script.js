@@ -93,6 +93,7 @@ window.onload = () => {
               let binImage = document.createElement('img');
               binImage.src = 'assets/img/bin.png';
               binImage.dataset.contactID = this.contactsList.indexOf(contact);
+              binImage.alt = 'Delete this contact';
               deleteButton.appendChild(binImage);
               deleteButton.addEventListener('click', (e) => {
                 cm.deleteContact(e);
@@ -152,6 +153,7 @@ window.onload = () => {
           let binImage = document.createElement('img');
           binImage.src = 'assets/img/bin.png';
           binImage.dataset.contactID = i;
+          binImage.alt = 'Delete this contact';
           deleteButton.appendChild(binImage);
           deleteButton.addEventListener('click', (e) => {
             cm.deleteContact(e);
