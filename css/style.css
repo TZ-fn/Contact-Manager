@@ -9,26 +9,15 @@ body {
   background: linear-gradient(30deg, #4ec2d966 0%, #bccb4866 100%);
 }
 
-input {
+.input-field {
   margin-left: 3px;
   padding: 2px;
 }
 
 .button-box button,
 .contact-input button {
-  /* border-radius: 3px;
-  color: #0f0f0f;
-  background: #ffffffb3;
-  transition: none;
-  border: 4px double #4ec2d94d; */
   padding: 0.7em;
 }
-
-/* .button-box button:hover,
-.contact-input button:hover {
-  background: transparent;
-  color: #0f0f0f;
-} */
 
 .button-box button:active,
 .contact-input button:active {
@@ -130,7 +119,6 @@ table:nth-child(2) {
 tr,
 td {
   border-top: 1px solid;
-  /* border-radius: 2px; */
 }
 
 td,

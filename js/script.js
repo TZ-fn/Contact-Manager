@@ -208,13 +208,7 @@ window.onload = () => {
     }
 
     static compareByName(contact1, contact2) {
-      if (contact1.name < contact2.name) {
-        return -1;
-      }
-      if (contact1.name > contact2.name) {
-        return 1;
-      }
-      return 0;
+      contact1.name < contact2.name ? -1 : contact1.name > contact2.name ? 1 : 0;
     }
 
     displayStatusInfo(statusType, message) {
