@@ -167,7 +167,7 @@ window.onload = () => {
 
     save() {
       localStorage.contacts = JSON.stringify(this.contactsList);
-      this.displayStatusInfo('success', 'Contacts saved!');
+      this.contactsList.length > 0 ? this.displayStatusInfo('success', 'Contacts saved!') : this.displayStatusInfo('error', 'No contacts to save!');
     }
 
     load() {
