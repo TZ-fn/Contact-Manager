@@ -28,13 +28,19 @@ window.onload = () => {
 
     add(contact) {
       if (contact.name === '' || contact.email === '') {
-        this.displayStatusInfo('error', 'Please enter name and e-mail!');
+        this.displayStatusInfo('error', 'Please enter name and e-mail address!');
+      } else if (!this.validateEmail(contact.email)) {
+        this.displayStatusInfo('error', 'Please enter a valid e-mail address!');
       } else {
         this.contactsList.push(contact);
         this.displayStatusInfo('success', 'Contact added!');
         contactName.value = '';
         contactEmail.value = '';
       }
+    }
+
+    validateEmail(email) {
+      return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
     }
 
     sort() {
@@ -198,7 +204,7 @@ window.onload = () => {
 
     deleteContact(e) {
       this.contactsList.splice(e.target.dataset.contactID, 1);
-      this.displayStatusInfo('info', 'Contact deleted');
+      this.displayStatusInfo('info', 'Contact deleted!');
       cm.search();
     }
 
@@ -219,7 +225,7 @@ window.onload = () => {
         statusWindow.className += ' success';
       } else if (statusType === 'info') {
         statusWindow.className += ' info';
-      } else {
+      } else if (statusType === 'error') {
         statusWindow.className += ' error';
       }
       statusWindow.textContent = message;
