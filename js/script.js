@@ -102,7 +102,8 @@ window.onload = () => {
               binImage.alt = 'Delete this contact';
               deleteButton.appendChild(binImage);
               deleteButton.addEventListener('click', (e) => {
-                cm.deleteContact(e);
+                this.deleteContact(e);
+                this.show();
               });
               deleteCell.appendChild(deleteButton);
               tableRow.appendChild(deleteCell);
@@ -113,9 +114,9 @@ window.onload = () => {
       }
     }
 
-    show() {
+    show(sortedBy) {
       contactsTableBox.innerHTML = '';
-      if (cm.contactsList.length === 0) {
+      if (this.contactsList.length === 0) {
         this.displayStatusInfo('error', 'No contacts to display.');
       } else {
         let contactsTable = document.createElement('table');
@@ -126,6 +127,9 @@ window.onload = () => {
         headerEmail.textContent = 'Email';
         headerRow.appendChild(headerName);
         headerRow.appendChild(headerEmail);
+        headerRow.querySelectorAll('th').forEach(header => {
+          header.textContent.toLocaleLowerCase() === sortedBy ? header.innerHTML += '&nbsp&nbsp↓' : header;
+        });
         contactsTable.appendChild(headerRow);
         contactsTableBox.appendChild(contactsTable);
         cm.contactsList.forEach((currentContact, i) => {
@@ -167,6 +171,13 @@ window.onload = () => {
           deleteCell.appendChild(deleteButton);
           tableRow.appendChild(deleteCell);
           contactsTable.appendChild(tableRow);
+        });
+        let tableHeaders = document.querySelectorAll('th');
+        tableHeaders.forEach(header => {
+          header.addEventListener('click', (e) => {
+            this.contactsList.sort((a, b) => a[e.target.textContent.toLowerCase()].localeCompare(b[e.target.textContent.toLowerCase()]));
+            this.show(e.target.textContent.toLowerCase());
+          });
         });
       }
     }
