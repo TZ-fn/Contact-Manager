@@ -11,7 +11,7 @@ window.onload = () => {
     clearContactsBtn = document.querySelector('#clearContacts'),
     contactsTableBox = document.querySelector('#contactsList'),
     statusWindow = document.querySelector('.status-window');
-  let sortedBy = 'name';
+
 
   class Contact {
     constructor(name, email) {
@@ -23,7 +23,9 @@ window.onload = () => {
   class ContactManager {
     constructor() {
       this.contactsList = [];
+      this.sortedBy = 'name';
     }
+
 
     add(contact) {
       if (contact.name === '' || contact.email === '') {
@@ -108,11 +110,12 @@ window.onload = () => {
       }
     }
 
-    show(sortedBy) {
+    show(sortedBy = this.sortedBy) {
       contactsTableBox.innerHTML = '';
       if (this.contactsList.length === 0) {
         this.displayStatusInfo('error', 'No contacts to display.');
       } else {
+        this.contactsList.sort((a, b) => a[sortedBy].localeCompare(b[sortedBy]));
         let contactsTable = document.createElement('table');
         let headerRow = document.createElement('tr');
         let headerName = document.createElement('th');
@@ -169,8 +172,9 @@ window.onload = () => {
         let tableHeaders = document.querySelectorAll('th');
         tableHeaders.forEach(header => {
           header.addEventListener('click', (e) => {
-            this.contactsList.sort((a, b) => a[e.target.textContent.toLowerCase()].localeCompare(b[e.target.textContent.toLowerCase()]));
-            this.show(e.target.textContent.toLowerCase());
+            this.sortedBy = e.target.textContent.toLowerCase().slice(0, 5).trim();
+            this.contactsList.sort((a, b) => a[sortedBy].localeCompare(b[sortedBy]));
+            this.show();
           });
         });
       }
