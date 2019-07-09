@@ -5,14 +5,13 @@ window.onload = () => {
     addContactBtn = document.querySelector('#addContact'),
     addTestContactsBtn = document.querySelector('#addTestContacts'),
     searchBox = document.querySelector('#search'),
-    showContactsBtn = document.querySelector('#showContacts'),
-    sortContactsBtn = document.querySelector('#sortContacts'),
     saveContactsBtn = document.querySelector('#saveContacts'),
     loadContactsBtn = document.querySelector('#loadContacts'),
     deleteContactBtn = document.querySelector('#deleteContact'),
     clearContactsBtn = document.querySelector('#clearContacts'),
     contactsTableBox = document.querySelector('#contactsList'),
     statusWindow = document.querySelector('.status-window');
+  let sortedBy = 'name';
 
   class Contact {
     constructor(name, email) {
@@ -41,11 +40,6 @@ window.onload = () => {
 
     validateEmail(email) {
       return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-    }
-
-    sort() {
-      this.contactsList.sort(ContactManager.compareByName);
-      this.displayStatusInfo('success', 'Contacts sorted!');
     }
 
     search() {
@@ -224,10 +218,6 @@ window.onload = () => {
       this.displayStatusInfo('info', 'Contacts cleared!');
     }
 
-    static compareByName(contact1, contact2) {
-      contact1.name < contact2.name ? -1 : contact1.name > contact2.name ? 1 : 0;
-    }
-
     displayStatusInfo(statusType, message) {
       statusWindow.style.display = 'block';
       statusWindow.className = 'status-window';
@@ -274,13 +264,8 @@ window.onload = () => {
     cm.search();
   });
 
-  showContactsBtn.addEventListener('click', () => {
-    cm.show();
-  });
-
-  sortContactsBtn.addEventListener('click', () => {
-    cm.sort();
-    cm.show();
+  searchBox.addEventListener('focus', () => {
+    cm.search();
   });
 
   saveContactsBtn.addEventListener('click', () => {
