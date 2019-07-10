@@ -23,7 +23,8 @@ window.onload = () => {
   class ContactManager {
     constructor() {
       this.contactsList = [];
-      this.sortedBy = 'name';
+      this.sortedBy = '';
+      this.sortOrder = this.sortOrder ? this.sortOrder : this.sortOrder = 'ascending';
     }
 
 
@@ -110,12 +111,11 @@ window.onload = () => {
       }
     }
 
-    show(sortedBy = this.sortedBy) {
+    show() {
       contactsTableBox.innerHTML = '';
       if (this.contactsList.length === 0) {
         this.displayStatusInfo('error', 'No contacts to display.');
       } else {
-        this.contactsList.sort((a, b) => a[sortedBy].localeCompare(b[sortedBy]));
         let contactsTable = document.createElement('table');
         let headerRow = document.createElement('tr');
         let headerName = document.createElement('th');
@@ -125,7 +125,13 @@ window.onload = () => {
         headerRow.appendChild(headerName);
         headerRow.appendChild(headerEmail);
         headerRow.querySelectorAll('th').forEach(header => {
-          header.textContent.toLocaleLowerCase() === sortedBy ? header.innerHTML += '&nbsp&nbsp↓' : header;
+          if (header.textContent.toLowerCase().slice(0, 5).trim() === this.sortedBy) {
+            if (this.sortOrder === 'ascending') {
+              header.textContent += ' ↑';
+            } else if (this.sortOrder === 'descending') {
+              header.textContent += ' ↓';
+            }
+          }
         });
         contactsTable.appendChild(headerRow);
         contactsTableBox.appendChild(contactsTable);
@@ -172,8 +178,7 @@ window.onload = () => {
         let tableHeaders = document.querySelectorAll('th');
         tableHeaders.forEach(header => {
           header.addEventListener('click', (e) => {
-            this.sortedBy = e.target.textContent.toLowerCase().slice(0, 5).trim();
-            this.contactsList.sort((a, b) => a[sortedBy].localeCompare(b[sortedBy]));
+            this.sortContacts(e);
             this.show();
           });
         });
@@ -220,6 +225,27 @@ window.onload = () => {
     clear() {
       this.contactsList = [];
       this.displayStatusInfo('info', 'Contacts cleared!');
+    }
+
+    sortContacts(e) {
+      const headerClicked = e.target.textContent.toLowerCase().slice(0, 5).trim();
+      this.sortOrder ? this.sortOrder : this.sortOrder = 'ascending';
+      if (this.sortedBy === headerClicked && this.sortOrder === 'ascending') {
+        this.sortOrder = 'descending';
+      } else if (this.sortedBy === headerClicked && this.sortOrder === 'descending') {
+        this.sortOrder = 'ascending';
+      }
+      const sort = (sortBy) => this.contactsList.sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
+      if (this.sortOrder === 'ascending') {
+        sort(headerClicked);
+        this.sortedBy = headerClicked;
+        this.show();
+      } else if (this.sortOrder === 'descending') {
+        sort(headerClicked);
+        this.sortedBy = headerClicked;
+        this.contactsList.reverse();
+        this.show();
+      }
     }
 
     displayStatusInfo(statusType, message) {
