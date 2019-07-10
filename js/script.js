@@ -117,6 +117,7 @@ window.onload = () => {
         this.displayStatusInfo('error', 'No contacts to display.');
       } else {
         let contactsTable = document.createElement('table');
+        let header = document.createElement('thead');
         let headerRow = document.createElement('tr');
         let headerName = document.createElement('th');
         let headerEmail = document.createElement('th');
@@ -133,8 +134,10 @@ window.onload = () => {
             }
           }
         });
-        contactsTable.appendChild(headerRow);
+        header.appendChild(headerRow);
+        contactsTable.appendChild(header);
         contactsTableBox.appendChild(contactsTable);
+        let tableBody = document.createElement('tbody');
         cm.contactsList.forEach((currentContact, i) => {
           let tableRow = document.createElement('tr');
           let nameCell = document.createElement('td');
@@ -173,7 +176,8 @@ window.onload = () => {
           });
           deleteCell.appendChild(deleteButton);
           tableRow.appendChild(deleteCell);
-          contactsTable.appendChild(tableRow);
+          tableBody.appendChild(tableRow);
+          contactsTable.appendChild(tableBody);
         });
         let tableHeaders = document.querySelectorAll('th');
         tableHeaders.forEach(header => {

@@ -14,14 +14,12 @@ body {
   padding: 2px;
 }
 
-.button-box button,
-.contact-input button {
+.button {
   padding: 0.7em;
 }
 
-.button-box button:active,
-.contact-input button:active {
-  transform: scale(1.02);
+.button:active {
+  transform: scale(1.03);
 }
 
 .button-box {
@@ -44,29 +42,30 @@ body {
   padding: 2em;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 3px;
-  max-width: 40%;
+  width: 90%;
+  max-width: 600px;
   min-height: 98vh;
   margin: 0.5rem auto;
   box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.3);
 }
 
-#searchBar {
+.search-bar {
   margin: 1em;
   display: flex;
   min-width: 100%;
 }
 
-#searchBar label {
+.search-bar label {
   width: 50%;
   margin: auto;
 }
 
-#searchBar input {
+.search-bar input {
   line-height: 2em;
   width: 200px;
 }
 
-#contactsList {
+.contacts-list {
   display: flex;
   justify-content: center;
 }
@@ -109,21 +108,17 @@ body {
 }
 
 table {
-  border-bottom: 1px solid;
+  border-collapse: collapse;
+  border-bottom: 1px solid black;
 }
 
-table:nth-child(2) {
-  background-color: #0f0f0f;
-}
-
-tr,
 td {
   border-top: 1px solid;
 }
 
 td,
 th {
-  padding: 5px 50px;
+  padding: 5px 35px;
 }
 
 tr:hover {
@@ -144,76 +139,17 @@ tr:hover {
   }
 }
 
-@media (max-width: 1750px) {
-  .container {
-    max-width: 70%;
-  }
-}
-
-@media (max-width: 1450px) {
-  .container {
-    max-width: 80%;
-  }
-}
-
-@media (max-width: 1200px) {
-  .container {
-    max-width: 90%;
-  }
-
-  .contact-input label {
-    margin-right: 5px;
-  }
-
-  td {
-    padding: 5px 25px;
-  }
-}
-
-@media (max-width: 650px) {
-  .container {
-    max-width: 95%;
-  }
-
-  .contact-input input {
-    margin-bottom: 1em;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .contact-input button {
-    height: 3.75em;
-    font-size: .71em;
-    padding: 0;
-  }
-
-  .button-box button {
-    height: 3.75em;
-    font-size: .66em;
-    padding: .1em;
+@media (max-width: 560px) {
+  .button {
+    font-size: 0.7rem;
   }
 
   .status-window {
     background-position: 5px center;
   }
-}
 
-@media (max-width: 500px) {
-  .status-window.error {
-    background-image: none;
-  }
-
-  td {
-    padding: 5px 5px;
-  }
-}
-
-@media (max-width: 400px) {
-  td {
-    font-size: .9em;
-    padding: 3px 3px;
+  td,
+  th {
+    padding: 5px 25px;
   }
 }
