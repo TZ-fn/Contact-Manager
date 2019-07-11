@@ -10,12 +10,13 @@ body {
 }
 
 .input-field {
-  margin-left: 3px;
+  width: 95%;
+  margin: 0 3px;
   padding: 2px;
 }
 
 .button {
-  padding: 0.7em;
+  padding: 0.3rem;
 }
 
 .button:active {
@@ -39,7 +40,7 @@ body {
 }
 
 .container {
-  padding: 2em;
+  padding: 1em;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 3px;
   width: 90%;
@@ -62,7 +63,7 @@ body {
 
 .search-bar input {
   line-height: 2em;
-  width: 200px;
+  max-width: 200px;
 }
 
 .contacts-list {
@@ -80,7 +81,7 @@ body {
   height: 2.5em;
   max-width: 80%;
   background-repeat: no-repeat;
-  background-position: 50px center;
+  background-position: 20px center;
 }
 
 .status-window.success {
@@ -139,6 +140,12 @@ tr:hover {
   }
 }
 
+@media (min-width: 960px) {
+  .container {
+    padding: 2em;
+  }
+}
+
 @media (max-width: 560px) {
   .button {
     font-size: 0.7rem;
@@ -151,5 +158,22 @@ tr:hover {
   td,
   th {
     padding: 5px 25px;
+  }
+}
+
+@media (max-width: 450px) {
+  .button {
+    font-size: 0.6rem;
+  }
+
+  .status-window {
+    font-size: 0.7rem;
+    background-position: 5px center;
+  }
+
+  td,
+  th {
+    /* width: 100%; */
+    padding: 2px 2px;
   }
 }

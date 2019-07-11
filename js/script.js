@@ -198,6 +198,7 @@ window.onload = () => {
       if (localStorage.contacts) {
         this.contactsList = JSON.parse(localStorage.contacts);
         this.displayStatusInfo('success', 'Contacts loaded!');
+        cm.show();
       } else {
         this.displayStatusInfo('error', 'No contacts to load!');
       }
@@ -299,7 +300,7 @@ window.onload = () => {
   });
 
   searchBox.addEventListener('focus', () => {
-    cm.search();
+    cm.contactsList.length > 0 ? cm.search() : '';
   });
 
   saveContactsBtn.addEventListener('click', () => {
@@ -308,7 +309,6 @@ window.onload = () => {
 
   loadContactsBtn.addEventListener('click', () => {
     cm.load();
-    cm.show();
   });
 
   deleteContactBtn.addEventListener('click', () => {
