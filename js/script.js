@@ -17,6 +17,7 @@ window.onload = () => {
     constructor(name, email) {
       this.name = name;
       this.email = email;
+      this.id = (Number(Date.now()) * Math.random()).toString(36).substr(2, 12);
     }
   }
 
@@ -38,6 +39,7 @@ window.onload = () => {
         this.displayStatusInfo('success', 'Contact added!');
         contactName.value = '';
         contactEmail.value = '';
+        this.showContacts(this.contactsList);
       }
     }
 
@@ -47,71 +49,18 @@ window.onload = () => {
 
     search() {
       if (searchBox.value === '') {
-        cm.show();
+        cm.showContacts(this.contactsList);
       } else {
         contactsTableBox.innerHTML = '';
-        let contactsTable = document.createElement('table');
-        let headerRow = document.createElement('tr');
-        let headerName = document.createElement('th');
-        let headerEmail = document.createElement('th');
-        headerName.textContent = 'Name';
-        headerEmail.textContent = 'Email';
-        headerRow.appendChild(headerName);
-        headerRow.appendChild(headerEmail);
-        contactsTable.appendChild(headerRow);
-        this.contactsList.forEach((contact, i) => {
-          if ((contact.name.toLowerCase().includes(searchBox.value.toLowerCase())) ||
-            (contact.email.toLowerCase().includes(searchBox.value.toLowerCase()))) {
-            let searchResults = [];
-            contactsTableBox.appendChild(contactsTable);
-            searchResults.push(contact);
-            searchResults.forEach(contact => {
-              let tableRow = document.createElement('tr');
-              let nameCell = document.createElement('td');
-              nameCell.textContent = contact.name;
-              tableRow.appendChild(nameCell);
-              let emailCell = document.createElement('td');
-              emailCell.textContent = contact.email;
-              tableRow.appendChild(emailCell);
-              nameCell.addEventListener('click', function () {
-                this.setAttribute('contenteditable', '');
-              });
-              nameCell.addEventListener('blur', function () {
-                this.setAttribute('contenteditable', 'false');
-              });
-              nameCell.addEventListener('input', function () {
-                cm.contactsList[i].name = nameCell.textContent;
-              });
-              emailCell.addEventListener('click', function () {
-                this.setAttribute('contenteditable', '');
-              });
-              emailCell.addEventListener('blur', function () {
-                this.setAttribute('contenteditable', 'false');
-              });
-              emailCell.addEventListener('input', function () {
-                cm.contactsList[i].email = emailCell.textContent;
-              });
-              let deleteCell = document.createElement('td');
-              let deleteButton = document.createElement('button');
-              let binImage = document.createElement('img');
-              binImage.src = 'assets/img/bin.png';
-              binImage.dataset.contactID = this.contactsList.indexOf(contact);
-              binImage.alt = 'Delete this contact';
-              deleteButton.appendChild(binImage);
-              deleteButton.addEventListener('click', (e) => {
-                this.deleteContact(e);
-                this.show();
-              });
-              deleteCell.appendChild(deleteButton);
-              tableRow.appendChild(deleteCell);
-              contactsTable.appendChild(tableRow);
-            });
-          }
+        let searchResult = this.contactsList.filter(contact => {
+          return (contact.name.toLowerCase().includes(searchBox.value.toLowerCase())) ||
+            (contact.email.toLowerCase().includes(searchBox.value.toLowerCase()));
         });
+        this.showContacts(searchResult);
       }
     }
 
-    show() {
+    showContacts(contactsList) {
       contactsTableBox.innerHTML = '';
       if (this.contactsList.length === 0) {
         this.displayStatusInfo('error', 'No contacts to display.');
@@ -138,7 +87,7 @@ window.onload = () => {
         contactsTable.appendChild(header);
         contactsTableBox.appendChild(contactsTable);
         let tableBody = document.createElement('tbody');
-        cm.contactsList.forEach((currentContact, i) => {
+        contactsList.forEach((currentContact, i) => {
           let tableRow = document.createElement('tr');
           let nameCell = document.createElement('td');
           nameCell.textContent = currentContact.name;
@@ -153,7 +102,7 @@ window.onload = () => {
             this.setAttribute('contenteditable', 'false');
           });
           nameCell.addEventListener('input', function () {
-            cm.contactsList[i].name = nameCell.textContent;
+            contactsList[i].name = nameCell.textContent;
           });
           emailCell.addEventListener('click', function () {
             this.setAttribute('contenteditable', '');
@@ -162,13 +111,13 @@ window.onload = () => {
             this.setAttribute('contenteditable', 'false');
           });
           emailCell.addEventListener('input', function () {
-            cm.contactsList[i].email = emailCell.textContent;
+            contactsList[i].email = emailCell.textContent;
           });
           let deleteCell = document.createElement('td');
           let deleteButton = document.createElement('button');
           let binImage = document.createElement('img');
           binImage.src = 'assets/img/bin.png';
-          binImage.dataset.contactID = i;
+          binImage.dataset.contactID = currentContact.id;
           binImage.alt = 'Delete this contact';
           deleteButton.appendChild(binImage);
           deleteButton.addEventListener('click', (e) => {
@@ -182,8 +131,8 @@ window.onload = () => {
         let tableHeaders = document.querySelectorAll('th');
         tableHeaders.forEach(header => {
           header.addEventListener('click', (e) => {
-            this.sortContacts(e);
-            this.show();
+            this.sortContacts(e, contactsList);
+            this.showContacts(contactsList);
           });
         });
       }
@@ -198,7 +147,7 @@ window.onload = () => {
       if (localStorage.contacts) {
         this.contactsList = JSON.parse(localStorage.contacts);
         this.displayStatusInfo('success', 'Contacts loaded!');
-        cm.show();
+        cm.showContacts(this.contactsList);
       } else {
         this.displayStatusInfo('error', 'No contacts to load!');
       }
@@ -213,7 +162,7 @@ window.onload = () => {
           this.contactsList.splice(this.contactsList.indexOf(contact), 1);
           matchingContact = true;
           this.displayStatusInfo('info', 'Contact deleted.');
-          cm.show();
+          cm.showContacts(this.contactsList);
         }
       });
       if (!matchingContact) {
@@ -222,7 +171,9 @@ window.onload = () => {
     }
 
     deleteContact(e) {
-      this.contactsList.splice(e.target.dataset.contactID, 1);
+      this.contactsList.forEach(contact => {
+        contact.id === e.target.dataset.contactID ? this.contactsList.splice(this.contactsList.indexOf(contact), 1) : '';
+      });
       this.displayStatusInfo('info', 'Contact deleted!');
       cm.search();
     }
@@ -232,7 +183,7 @@ window.onload = () => {
       this.displayStatusInfo('info', 'Contacts cleared!');
     }
 
-    sortContacts(e) {
+    sortContacts(e, contactsList) {
       const headerClicked = e.target.textContent.toLowerCase().slice(0, 5).trim();
       this.sortOrder ? this.sortOrder : this.sortOrder = 'ascending';
       if (this.sortedBy === headerClicked && this.sortOrder === 'ascending') {
@@ -240,16 +191,16 @@ window.onload = () => {
       } else if (this.sortedBy === headerClicked && this.sortOrder === 'descending') {
         this.sortOrder = 'ascending';
       }
-      const sort = (sortBy) => this.contactsList.sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
+      const sort = (sortBy) => contactsList.sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
       if (this.sortOrder === 'ascending') {
         sort(headerClicked);
         this.sortedBy = headerClicked;
-        this.show();
+        this.showContacts(contactsList);
       } else if (this.sortOrder === 'descending') {
         sort(headerClicked);
         this.sortedBy = headerClicked;
-        this.contactsList.reverse();
-        this.show();
+        contactsList.reverse();
+        this.showContacts(contactsList);
       }
     }
 
@@ -286,13 +237,11 @@ window.onload = () => {
   addContactBtn.addEventListener('click', (e) => {
     e.preventDefault();
     cm.add(new Contact(contactName.value, contactEmail.value));
-    cm.show();
   });
 
   addTestContactsBtn.addEventListener('click', (e) => {
     e.preventDefault();
     cm.addTestContacts();
-    cm.show();
   });
 
   searchBox.addEventListener('input', () => {
@@ -317,7 +266,7 @@ window.onload = () => {
 
   clearContactsBtn.addEventListener('click', () => {
     cm.clear();
-    cm.show();
+    cm.showContacts(cm.contactsList);
   });
 
 };
