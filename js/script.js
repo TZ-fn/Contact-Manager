@@ -12,7 +12,6 @@ window.onload = () => {
     contactsTableBox = document.querySelector('#contactsList'),
     statusWindow = document.querySelector('.status-window');
 
-
   class Contact {
     constructor(name, email) {
       this.name = name;
@@ -27,7 +26,6 @@ window.onload = () => {
       this.sortedBy = '';
       this.sortOrder = this.sortOrder ? this.sortOrder : this.sortOrder = 'ascending';
     }
-
 
     add(contact) {
       if (contact.name === '' || contact.email === '') {
@@ -162,7 +160,7 @@ window.onload = () => {
           this.contactsList.splice(this.contactsList.indexOf(contact), 1);
           matchingContact = true;
           this.displayStatusInfo('info', 'Contact deleted.');
-          cm.showContacts(this.contactsList);
+          this.showContacts(this.contactsList);
         }
       });
       if (!matchingContact) {
