@@ -217,7 +217,7 @@ window.onload = () => {
     }
 
     addTestContacts() {
-      cm.add(new Contact("Paul Muad'Dib", 'mdibpaul@atreides.net'));
+      cm.add(new Contact('Paul Muad\'Dib', 'mdibpaul@atreides.net'));
       cm.add(new Contact('Ronald J. Doak', 'RonaldJDoak@rhyta.com'));
       cm.add(new Contact('Fox Mulder', 'iwnttbelive@fbbi.com'));
       cm.add(new Contact('Yvonne Du Bois', 'yvdbois@yahoo.com'));
